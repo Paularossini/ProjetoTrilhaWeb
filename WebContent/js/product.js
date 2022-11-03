@@ -6,7 +6,7 @@ $(document).ready(function(){
 		$.ajax({
 			type:"GET",
 			url: "/ProjetoTrilhaWeb/rest/marca/buscar",
-			seccess: function(){
+			success: function(){
 			},
 			error: function(){
 			}
