@@ -11,7 +11,7 @@ import javax.ws.rs.core.Response;
 
 import br.com.coldigogeladeiras.jdbc.JDBCMarcaDAO;
 import br.com.coldigogeladeiras.modelo.Marca;
-import br.com.coldigogeladiras.bd.Conexao;
+import br.com.coldigogeladeiras.bd.Conexao;
 
 @Path("marca")
 public class MarcaRest extends UtilRest {
@@ -35,6 +35,5 @@ public class MarcaRest extends UtilRest {
 			e.printStackTrace();
 			return this.buildErrorResponse(e.getMessage());
 		}
-		
 	}
 }
