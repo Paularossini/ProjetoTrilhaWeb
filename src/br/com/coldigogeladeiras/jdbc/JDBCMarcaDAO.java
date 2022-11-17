@@ -1,65 +1,239 @@
 package br.com.coldigogeladeiras.jdbc;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import br.com.coldigogeladeiras.jdbcinterface.MarcaDAO;
-import br.com.coldigogeladeiras.modelo.Marca;
 
-public class JDBCMarcaDAO implements MarcaDAO{
-	
+import com.google.gson.JsonObject;
+
+import java.sql.Statement;
+import br.com.coldigogeladeiras.modelo.Marca;
+import br.com.coldigogeladeiras.jdbcinterface.MarcaDAO;
+public class JDBCMarcaDAO implements MarcaDAO
+{
+
 	private Connection conexao;
 	
 	public JDBCMarcaDAO(Connection conexao) {
-		this.conexao = conexao;
+		this.conexao = conexao; 
 	}
 	
 	public List<Marca> buscar(){
-		//Criaçãp da instrução SQL para busca de todas as marcas
-		String comando = "SELECT * FROM marcas";
-		
-		//Criação de uma lista para armazenar cada marca encontrada
+		String comando = "SELECT * FROM marcas WHERE status=1";
 		List<Marca> listMarcas = new ArrayList<Marca>();
 		
-		//Criação do objeto marca com valor null
 		Marca marca = null;
-		
-		//Abertura do try-catch
 		try {
-			//Uso da conexao do banco para prepara-lo para uma instrução SQL
 			Statement stmt = conexao.createStatement();
 			
-			//Execuçãp da instrução criada e armazenamento do resultado no objeto
 			ResultSet rs = stmt.executeQuery(comando);
-			
-			//Enquanto houver uma próxima linha no resultado
-			while(rs.next()) {
-				
-				//Criaçãp de uma instancia da classe Marca
+			while (rs.next()) {
 				marca = new Marca();
 				
-				//Recebimento dos 2 dados retornados do BD para cada linha encontrada
 				int id = rs.getInt("id");
 				String nome = rs.getString("nome");
+				int status = rs.getInt("status");
 				
-				//Setando no objeto marca os valores encontrados
 				marca.setId(id);
 				marca.setNome(nome);
+				marca.setStatus(status);
 				
-				//Adiçao da instancia contida no objeto Marca na lisra de marcas
 				listMarcas.add(marca);
 			}
-			
-		//Caso alguma Exception seja gerada no try, receba-a no objeto "ex"
-		}catch(Exception ex) {
-			//Exibe a exceção na console
+		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
 		
-		//Retorno para quem chamou o método a lista criada
 		return listMarcas;
 	}
-
+	
+	public boolean inserir(Marca marca) {
+		
+		String comando = "INSERT INTO marcas "
+				+ "(nome) "
+				+ "VALUES (?)";
+		
+		try {
+			PreparedStatement p = this.conexao.prepareStatement(comando);
+			p.setString(1, marca.getNome());
+			
+			p.execute();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.print(e.getMessage());
+			return false;
+		}
+		
+		return true;
+	}
+	
+	public List<JsonObject> buscarPorNome(String nomeBusca){
+		String comando = "SELECT * FROM marcas";
+		
+		if (!nomeBusca.equals("")) {
+			comando += " WHERE nome LIKE '%" + nomeBusca+"%' ";
+		}
+		comando += " ORDER BY id ASC";
+		
+		List<JsonObject> listaMarcas = new ArrayList<JsonObject>();
+		JsonObject marca = null;
+		try {
+			Statement stmt = conexao.createStatement();
+			ResultSet rs = stmt.executeQuery(comando);
+			
+			while(rs.next()) {
+				int id = rs.getInt("id");
+				String nome = rs.getString("nome");
+				int status = rs.getInt("status");
+				
+				marca = new JsonObject();
+				marca.addProperty("id", id);
+				marca.addProperty("nome", nome);	
+				marca.addProperty("status", status);	
+				
+				listaMarcas.add(marca);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+			System.out.print(e.getMessage());
+		}
+		
+		return listaMarcas;
+	}
+	
+	public boolean deletar(int id) {
+		String comando = "DELETE FROM marcas WHERE id = ?";
+		PreparedStatement p;
+		try {
+			p = this.conexao.prepareStatement(comando);
+			p.setInt(1,id);
+			p.execute();
+		} catch(SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+		
+		return true;
+	}
+	
+	public Marca buscarPorId(int id) {
+		String comando = "SELECT * FROM marcas WHERE marcas.id = ?";
+		Marca marca = new Marca();
+		try {
+			PreparedStatement p = this.conexao.prepareStatement(comando);
+			p.setInt(1,id);
+			ResultSet rs = p.executeQuery();
+			while (rs.next()) {
+				String nome = rs.getString("nome");
+				int status = rs.getInt("status");
+				
+				marca.setId(id);
+				marca.setNome(nome);
+				marca.setStatus(status);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return marca;
+	}
+	
+	
+	public boolean alterar(Marca marca) {
+		String comando = "UPDATE marcas "
+				+ "SET nome=?"
+				+ " WHERE id =?";
+		PreparedStatement p;
+		try {
+			p = this.conexao.prepareStatement(comando);
+			p.setString(1, marca.getNome());
+			p.setInt(2, marca.getId());
+			
+			p.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.print(e.getMessage());
+			return false;
+		}
+		
+		return true;
+	}
+	public boolean alterarStatus(Marca marca) {
+		String comando = "";
+		PreparedStatement p;
+		
+		Marca marcaAtual = this.buscarPorId(marca.getId());
+		if (marcaAtual.getStatus() == 1) {
+			comando = "UPDATE marcas "
+					+ "SET status=0"
+					+ " WHERE id =?";
+		} else {
+			comando = "UPDATE marcas "
+					+ "SET status=1"
+					+ " WHERE id =?";
+		}
+		try {
+			p = this.conexao.prepareStatement(comando);
+			p.setInt(1, marca.getId());
+			
+			p.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.print(e.getMessage());
+			return false;
+		}
+		
+		return true;
+	}
+	
+	public boolean verificaProduto(int id) {
+		String comando = "SELECT * FROM produtos WHERE marca_id = ?";
+		Marca marca = new Marca();
+		boolean verifica = false;
+		try {
+			PreparedStatement p = this.conexao.prepareStatement(comando);
+			p.setInt(1,id);
+			ResultSet rs = p.executeQuery();
+			while (rs.next()) {
+				String nome = rs.getString("nome");
+				int status = rs.getInt("status");
+				
+				marca.setId(id);
+				marca.setNome(nome);
+				marca.setStatus(status);
+			}
+			if (marca.getId() > 0) {
+				verifica = true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return verifica;
+	}
+	public boolean verificaNome(String verificaNome) {
+		String comando = "SELECT * FROM marcas WHERE nome = ?";
+		Marca marca = new Marca();
+		boolean verifica = false;
+		try {
+			PreparedStatement p = this.conexao.prepareStatement(comando);
+			p.setString(1,verificaNome);
+			ResultSet rs = p.executeQuery();
+			while (rs.next()) {
+				int id = rs.getInt("id");
+				int status = rs.getInt("status");
+				
+				marca.setId(id);
+				marca.setNome(verificaNome);
+				marca.setStatus(status);
+			}
+			if (marca.getId() > 0) {
+				verifica = true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return verifica;
+	}
 }

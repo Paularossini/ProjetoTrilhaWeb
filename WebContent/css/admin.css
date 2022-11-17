@@ -3,16 +3,12 @@ body {
 	margin: 0 auto;
 	font-family: "Century Gothic", sans-serif;
 }
-/*****************************************
-           Configuraçoes gerais
-*****************************************/
-/* Cabeçalho */
-header {
-	height: 136.5px;
-	background-color: #008eb6;
-	position: -webkit-sticky;
-	position: sticky;
-	top: 0px;
+header{
+	height: 170px;
+	background-color:#008eb6;
+	position:-webkit-sticky;
+	position:sticky;
+	top:0px;
 }
 header img {
 	float: left;
@@ -22,87 +18,77 @@ header img {
 }
 header h1 {
 	float: left;
-	margin: 30px 0 30px 30px;
-	font-size: 40px;
+	margin: 30px 0 15px 30px;
+	font-size:40px;
 	color:#ffffff;
 }
-
-/* Menu */
 nav{
 	clear: both;
 	width: 70%;
-	display: inline-block;
+	display:inline-block;
 	margin: 0px auto;
 }
-nav a{
+nav a {
 	color: white;
 	font-weight: bold;
-	letter-spacing: 1px;
+	letter-spacing:1px;
 	text-decoration: none;
 	text-align: center;
 }
-nav .opcao{
-	float: left;
+nav .opcao {
+	float:left;
 	width: 19%;
 	background-color: #005f89;
 	margin: 0 0.5%;
 	font-size: 16px;
 }
-nav .opcao:hover{
+nav .opcao:hover {
 	background-color: #83afd3;
 }
-
-/* Dropdown - posiciona o conteudo */
-.dropdown{
+.dropdown {
 	position: relative;
-	display:inline-block;
+	display: inline-block;
 }
-.dropdown:hover .dropdown-content{
-	display: block;
-}
-/* Conterudo Dropdown (oculto)*/
-.dropdown-content{
-	display:none;
+.dropdown-content {
+	display: none;
 	position: absolute;
 	background-color: #005f89;
 	z-index:1;
-	width: 100%
+	width: 100%;
 }
-
-/* Dropdown -links*/
-.dropdown-content a{
+.dropdown-content a {
 	display: block;
 }
-.dropdown-content a:hover{
+.dropdown-content a:hover {
 	background-color: #83afd3;
 }
-
-
-/* Área geral para conteudos especificos da cada pagina */
-section{
-	clear: both;
-	height: 460px;
-	width: 100%;
-	margin-top: 0px;
+.dropdown:hover .dropdown-content {
+	display: block;
 }
-
-/* Rodapé */
+section {
+	clear:both;
+	min-height:460px;
+	width: 100%;
+	margin-top:0px;
+}
 footer{
 	background-color: #005f89;
-	color: #fff;
-	text-align: center;
+	color:#fff;
+	text-align:center;
 	padding: 10px;
 }
 
-/*****************************************
-               Layout CRUDs
-*****************************************/
-/**************título da pagina************/
+/****** Modais *************/
+#modalAviso, .modalEditar{
+	display: none;
+}
+/****** layout cruds *******/
 section h2, section h3{
 	text-align: center;
 }
+
 /******formulário********/
-.frmInserir{
+.frmInserir, .frmFiltrar{
 	margin:0px auto;
 	margin-bottom:10px;
 	width:500px;
@@ -110,7 +96,9 @@ section h2, section h3{
 .frmInserir label{
 	width:200px;
 }
-
+.frmFiltrar{
+	width:350px;
+}
 .frmInserir input, .frmInserir textarea, .frmInserir select{
 	width:300px;
 	padding:2px 0;
@@ -119,7 +107,7 @@ section h2, section h3{
 	height: 100px;
 	resize:none;
 }
-.frmInserir button{
+.frmInserir button, .frmFiltrar button{
 	width: 100px;
 	margin:0 1%;
 	background-color: #b1ccf5;
@@ -127,10 +115,117 @@ section h2, section h3{
 	font-size: 16px;
 	float: right;
 }
-
-
 .frmInserir .aviso{
 	background-color: #ff0000;
 	color: #fff;
 	font-weight: bold;
+}
+
+/******** Tabela de registros *******/
+.listaRegistros{
+	margin-bottom: 10px;
+}
+
+.listaRegistros table{
+	border: 1px solid #000;
+	border-collapse: collapse;
+	margin: 0 auto;
+	min-width: 50%;
+}
+
+.listaRegistros table th{
+	text-align: center;
+	font-size: 18px;
+	font-weight: bold;
+	color: #fff;
+	padding: 0 5px;
+	border: transparent;
+}
+
+.listaRegistros tr, .listaRegistros td, .listaRegistros th{
+	border: 1px solid #B0C4DE;
+	padding: 0px 5px;
+}
+
+.listaRegistros tr, .listaRegistros td{
+	font-size: 16px;
+}
+.listaRegistros tr:nth-child(even) {
+	background-color: #b1ccf5;
+}
+.listaRegistros tr:nth-child(odd) {
+	background-color: #83afd3;
+}
+.listaRegistros .acoes{
+	width: 70px;
+}
+
+.listaRegistros table img{
+	padding: 0 5px;
+	width: 20px;
+	height: 20px;
+	cursor: pointer;
+}
+
+/*****SLIDER *****/
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 24px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
 }
