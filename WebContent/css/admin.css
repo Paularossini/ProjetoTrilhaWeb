@@ -3,12 +3,16 @@ body {
 	margin: 0 auto;
 	font-family: "Century Gothic", sans-serif;
 }
-header{
-	height: 170px;
-	background-color:#008eb6;
-	position:-webkit-sticky;
-	position:sticky;
-	top:0px;
+/*****************************************
+           Configuraçoes gerais
+*****************************************/
+/* Cabeçalho */
+header {
+	height: 130px;
+	background-color: #008eb6;
+	position: -webkit-sticky;
+	position: sticky;
+	top: 0px;
 }
 header img {
 	float: left;
@@ -18,14 +22,17 @@ header img {
 }
 header h1 {
 	float: left;
-	margin: 30px 0 15px 30px;
-	font-size:40px;
+	margin: 30px 0 30px 30px;
+	font-size: 40px;
 	color:#ffffff;
+
 }
+
+/* Menu */
 nav{
 	clear: both;
 	width: 70%;
-	display:inline-block;
+	display: inline-block;
 	margin: 0px auto;
 }
 nav a {
@@ -45,10 +52,13 @@ nav .opcao {
 nav .opcao:hover {
 	background-color: #83afd3;
 }
+
+/* Dropdown - posiciona o conteudo */
 .dropdown {
 	position: relative;
 	display: inline-block;
 }
+/* Conterudo Dropdown (oculto)*/
 .dropdown-content {
 	display: none;
 	position: absolute;
@@ -56,6 +66,7 @@ nav .opcao:hover {
 	z-index:1;
 	width: 100%;
 }
+/* Dropdown -links*/
 .dropdown-content a {
 	display: block;
 }
@@ -65,19 +76,21 @@ nav .opcao:hover {
 .dropdown:hover .dropdown-content {
 	display: block;
 }
-section {
-	clear:both;
-	min-height:460px;
+* Área geral para conteudos especificos da cada pagina */
+section{
+	clear: both;
+	height: 460px;
 	width: 100%;
-	margin-top:0px;
-}
-footer{
-	background-color: #005f89;
-	color:#fff;
-	text-align:center;
-	padding: 10px;
+	margin-top: 0px;
 }
 
+/* Rodapé */
+footer{
+	background-color: #005f89;
+	color: #fff;
+	text-align: center;
+	padding: 10px;
+}
 /****** Modais *************/
 #modalAviso, .modalEditar{
 	display: none;
@@ -85,6 +98,7 @@ footer{
 /****** layout cruds *******/
 section h2, section h3{
 	text-align: center;
+		height: 500px;
 }
 
 /******formulário********/
