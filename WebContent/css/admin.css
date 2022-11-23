@@ -89,6 +89,7 @@ footer{
 	color: #fff;
 	text-align: center;
 	padding: 10px;
+	margin-top: 300px;
 }
 /****** Modais *************/
 #modalAviso, .modalEditar{
@@ -100,11 +101,12 @@ section h2, section h3{
 }
 
 /******formulário********/
-.frmInserir, .frmFiltrar{
+.frmInserir{
 	margin:0px auto;
 	margin-bottom:10px;
 	width:500px;
 }
+
 .frmInserir label{
 	width:200px;
 }
@@ -115,9 +117,15 @@ section h2, section h3{
 	width:300px;
 	padding:2px 0;
 }
+
 .frmInserir textarea{
 	height: 100px;
 	resize:none;
+}
+
+#botoes{
+	display: flex;
+    flex-direction: row-reverse	
 }
 .frmInserir button, .frmFiltrar button{
 	width: 100px;

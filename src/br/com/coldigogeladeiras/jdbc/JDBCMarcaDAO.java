@@ -6,12 +6,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
 import com.google.gson.JsonObject;
-
 import java.sql.Statement;
 import br.com.coldigogeladeiras.modelo.Marca;
 import br.com.coldigogeladeiras.jdbcinterface.MarcaDAO;
+
 public class JDBCMarcaDAO implements MarcaDAO
 {
 
@@ -39,7 +38,6 @@ public class JDBCMarcaDAO implements MarcaDAO
 				
 				marca.setId(id);
 				marca.setNome(nome);
-				marca.setStatus(status);
 				
 				listMarcas.add(marca);
 			}
@@ -50,190 +48,4 @@ public class JDBCMarcaDAO implements MarcaDAO
 		return listMarcas;
 	}
 	
-	public boolean inserir(Marca marca) {
-		
-		String comando = "INSERT INTO marcas "
-				+ "(nome) "
-				+ "VALUES (?)";
-		
-		try {
-			PreparedStatement p = this.conexao.prepareStatement(comando);
-			p.setString(1, marca.getNome());
-			
-			p.execute();
-		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.print(e.getMessage());
-			return false;
-		}
-		
-		return true;
-	}
-	
-	public List<JsonObject> buscarPorNome(String nomeBusca){
-		String comando = "SELECT * FROM marcas";
-		
-		if (!nomeBusca.equals("")) {
-			comando += " WHERE nome LIKE '%" + nomeBusca+"%' ";
-		}
-		comando += " ORDER BY id ASC";
-		
-		List<JsonObject> listaMarcas = new ArrayList<JsonObject>();
-		JsonObject marca = null;
-		try {
-			Statement stmt = conexao.createStatement();
-			ResultSet rs = stmt.executeQuery(comando);
-			
-			while(rs.next()) {
-				int id = rs.getInt("id");
-				String nome = rs.getString("nome");
-				int status = rs.getInt("status");
-				
-				marca = new JsonObject();
-				marca.addProperty("id", id);
-				marca.addProperty("nome", nome);	
-				marca.addProperty("status", status);	
-				
-				listaMarcas.add(marca);
-			}
-		}catch(Exception e) {
-			e.printStackTrace();
-			System.out.print(e.getMessage());
-		}
-		
-		return listaMarcas;
-	}
-	
-	public boolean deletar(int id) {
-		String comando = "DELETE FROM marcas WHERE id = ?";
-		PreparedStatement p;
-		try {
-			p = this.conexao.prepareStatement(comando);
-			p.setInt(1,id);
-			p.execute();
-		} catch(SQLException e) {
-			e.printStackTrace();
-			return false;
-		}
-		
-		return true;
-	}
-	
-	public Marca buscarPorId(int id) {
-		String comando = "SELECT * FROM marcas WHERE marcas.id = ?";
-		Marca marca = new Marca();
-		try {
-			PreparedStatement p = this.conexao.prepareStatement(comando);
-			p.setInt(1,id);
-			ResultSet rs = p.executeQuery();
-			while (rs.next()) {
-				String nome = rs.getString("nome");
-				int status = rs.getInt("status");
-				
-				marca.setId(id);
-				marca.setNome(nome);
-				marca.setStatus(status);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return marca;
-	}
-	
-	
-	public boolean alterar(Marca marca) {
-		String comando = "UPDATE marcas "
-				+ "SET nome=?"
-				+ " WHERE id =?";
-		PreparedStatement p;
-		try {
-			p = this.conexao.prepareStatement(comando);
-			p.setString(1, marca.getNome());
-			p.setInt(2, marca.getId());
-			
-			p.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.print(e.getMessage());
-			return false;
-		}
-		
-		return true;
-	}
-	public boolean alterarStatus(Marca marca) {
-		String comando = "";
-		PreparedStatement p;
-		
-		Marca marcaAtual = this.buscarPorId(marca.getId());
-		if (marcaAtual.getStatus() == 1) {
-			comando = "UPDATE marcas "
-					+ "SET status=0"
-					+ " WHERE id =?";
-		} else {
-			comando = "UPDATE marcas "
-					+ "SET status=1"
-					+ " WHERE id =?";
-		}
-		try {
-			p = this.conexao.prepareStatement(comando);
-			p.setInt(1, marca.getId());
-			
-			p.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.print(e.getMessage());
-			return false;
-		}
-		
-		return true;
-	}
-	
-	public boolean verificaProduto(int id) {
-		String comando = "SELECT * FROM produtos WHERE marca_id = ?";
-		Marca marca = new Marca();
-		boolean verifica = false;
-		try {
-			PreparedStatement p = this.conexao.prepareStatement(comando);
-			p.setInt(1,id);
-			ResultSet rs = p.executeQuery();
-			while (rs.next()) {
-				String nome = rs.getString("nome");
-				int status = rs.getInt("status");
-				
-				marca.setId(id);
-				marca.setNome(nome);
-				marca.setStatus(status);
-			}
-			if (marca.getId() > 0) {
-				verifica = true;
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return verifica;
-	}
-	public boolean verificaNome(String verificaNome) {
-		String comando = "SELECT * FROM marcas WHERE nome = ?";
-		Marca marca = new Marca();
-		boolean verifica = false;
-		try {
-			PreparedStatement p = this.conexao.prepareStatement(comando);
-			p.setString(1,verificaNome);
-			ResultSet rs = p.executeQuery();
-			while (rs.next()) {
-				int id = rs.getInt("id");
-				int status = rs.getInt("status");
-				
-				marca.setId(id);
-				marca.setNome(verificaNome);
-				marca.setStatus(status);
-			}
-			if (marca.getId() > 0) {
-				verifica = true;
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return verifica;
-	}
 }

@@ -16,7 +16,7 @@ public class UtilRest {
 			return this.buildErrorResponse(ex.getMessage());
 		}
 	}
-	// função de devolver o erro em formato de texto
+	// funcao de devolver o erro em formato de texto
 	public Response buildErrorResponse(String str) {
 		ResponseBuilder rb = Response.status(Response.Status.INTERNAL_SERVER_ERROR);
 		

@@ -15,7 +15,7 @@ $(document).ready(function(){
 		});
 	}
 	
-	//modal
+	//MODAL
 	COLDIGO.exibirAviso = function(aviso){
 		var modal = {
 			title:"Mensagem",
