@@ -28,8 +28,8 @@ public class MarcaRest extends UtilRest{
 			JDBCMarcaDAO jdbcMarca = new JDBCMarcaDAO(conexao);
 			
 			listaMarcas = jdbcMarca.buscar();
-			
 			conec.fecharConexao();
+	
 			return this.buildResponse(listaMarcas);
 		} catch (Exception e) {
 			e.printStackTrace();

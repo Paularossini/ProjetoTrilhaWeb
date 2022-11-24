@@ -11,8 +11,7 @@ import java.sql.Statement;
 import br.com.coldigogeladeiras.modelo.Marca;
 import br.com.coldigogeladeiras.jdbcinterface.MarcaDAO;
 
-public class JDBCMarcaDAO implements MarcaDAO
-{
+public class JDBCMarcaDAO implements MarcaDAO{
 
 	private Connection conexao;
 	
@@ -21,26 +20,26 @@ public class JDBCMarcaDAO implements MarcaDAO
 	}
 	
 	public List<Marca> buscar(){
-		String comando = "SELECT * FROM marcas WHERE status=1";
+		String comando = "SELECT * FROM marcas";
 		List<Marca> listMarcas = new ArrayList<Marca>();
 		
 		Marca marca = null;
 		try {
-			Statement stmt = conexao.createStatement();
 			
+			Statement stmt = conexao.createStatement();
 			ResultSet rs = stmt.executeQuery(comando);
+			
 			while (rs.next()) {
 				marca = new Marca();
 				
 				int id = rs.getInt("id");
 				String nome = rs.getString("nome");
-				int status = rs.getInt("status");
 				
 				marca.setId(id);
 				marca.setNome(nome);
-				
 				listMarcas.add(marca);
 			}
+			
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}

@@ -1,8 +1,9 @@
 package br.com.coldigogeladeiras.modelo;
 
 import java.io.Serializable;
-// n�o entendi pq o serializable
+
 public class Marca implements Serializable{
+	
 	// nao entendi pq o serializable
 	private static final long serialVersionUID = 1L;
 

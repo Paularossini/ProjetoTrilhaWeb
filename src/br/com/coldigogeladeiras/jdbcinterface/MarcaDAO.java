@@ -2,6 +2,7 @@ package br.com.coldigogeladeiras.jdbcinterface;
 
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 import br.com.coldigogeladeiras.modelo.Marca;
 
@@ -18,7 +19,6 @@ public interface MarcaDAO {
 		try {
 			
 			Statement stmt = conexao.createStatement();
-			
 			ResultSet rs = stmt.executeQuery(comando);
 			
 			while (rs.next()) {
@@ -37,7 +37,6 @@ public interface MarcaDAO {
 			ex.printStackTrace();
 		}
 		
-		return listMarcas;
+		return listMarcas;	
 	}
-	
 }
