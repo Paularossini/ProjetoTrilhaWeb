@@ -6,12 +6,12 @@ public class Conexao {
 	// connection do driver 
 	private Connection conexao;
 	
-	// tenta fazer a conexaocom as credenciais inseridas na funcao do driver
+	// tenta fazer a conexao com as credenciais inseridas na funcao do driver
 	// Se nao der certo, ira retornar a mensagem de erro
 	public Connection abrirConexao() {
 		try {
 			// indica de qual driver estamos utilizando
-			Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
+			Class.forName("com.mysql.cj.jdbc.Driver");
 			conexao = java.sql.DriverManager.
 					getConnection("jdbc:mysql://localhost/bdcoldigo?"
 							+"user=root&password=root&useTimezone=true&serverTimezone=UTC");

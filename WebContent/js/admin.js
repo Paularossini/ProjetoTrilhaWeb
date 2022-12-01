@@ -29,6 +29,6 @@ $(document).ready(function(){
 			}
 		};
 		$("#modalAviso").html(aviso);
-		$("#modalAviso").dialog(modal);
+		$("#modalAviso").dialog(modal);//cria a modal
 	};
 });

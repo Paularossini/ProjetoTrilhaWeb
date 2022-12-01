@@ -4,7 +4,6 @@ import java.io.Serializable;
 
 public class Marca implements Serializable{
 	
-	// nao entendi pq o serializable
 	private static final long serialVersionUID = 1L;
 
 	private int id;

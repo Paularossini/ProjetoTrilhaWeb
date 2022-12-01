@@ -27,7 +27,7 @@ public class JDBCProdutoDAO implements ProdutoDAO{
 		
 		try {
 			PreparedStatement p = this.conexao.prepareStatement(comando);
-			
+			//substitui as ???
 			p.setInt(1, produto.getId());
 			p.setString(2, produto.getCategoria());
 			p.setString(3, produto.getModelo());
@@ -44,6 +44,15 @@ public class JDBCProdutoDAO implements ProdutoDAO{
 		
 		return true;
 	}
+	
+	
+	
+	// Aqui Acaba
+	
+	
+	
+	
+	
 	
 	public List<JsonObject> buscarPorNome(String nome){
 		String comando = "SELECT produtos.*, marcas.nome as marca FROM produtos"

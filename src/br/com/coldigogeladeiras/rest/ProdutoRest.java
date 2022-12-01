@@ -29,134 +29,32 @@ public class ProdutoRest extends UtilRest{
 	
 	@POST
 	@Path("/inserir")
-	@Consumes("application/*")
+	@Consumes("application/*")//Algo deve ser recebido
 	public Response inserir(String produtoParam) {
 		try {
-			Produto produto = new Gson().fromJson(produtoParam, Produto.class);
+			Produto produto = new Gson().fromJson(produtoParam, Produto.class);//ele procura um atributo na classe que tenha o mesmo nome e guarda
 			Conexao conec = new Conexao();
 			Connection conexao = conec.abrirConexao();
 			
 			JDBCProdutoDAO jdbcProduto = new JDBCProdutoDAO(conexao);
-			boolean verificaModelo = jdbcProduto.verificaModelo(produto.getModelo());
+			boolean retorno = jdbcProduto.inserir(produto);
 			String msg = "";
-			if (!verificaModelo) {
-				boolean retorno = jdbcProduto.inserir(produto);
-				
-				
-				if (retorno) {
-					msg = "Produto cadastrado com sucesso!";
-				} else {
-					msg = "Erro ao cadastrar produto";
-				}
-			} else {
-				msg = "Já existe produto com este modelo";
-			}
-			
-			JDBCMarcaDAO jdbcMarca = new JDBCMarcaDAO(conexao);
-			Marca marca = jdbcMarca.buscarPorId(produto.getMarcaId());
-			if (marca.getId() == 0) {
-				msg = "Marca inexistente!";
-			}
-			conec.fecharConexao();
-			return this.buildResponse(msg);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return this.buildErrorResponse(e.getMessage());
-		}
-	}
-	
-	@GET
-	@Path("/buscar")
-	@Consumes("application/*")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response buscarPorNome(@QueryParam("valorBusca") String nome) {
-		
-		try {
-			List<JsonObject> listaProdutos = new ArrayList<JsonObject>();
-			
-			Conexao conec = new Conexao();
-			
-			Connection conexao = conec.abrirConexao();
-			JDBCProdutoDAO jdbcProduto = new JDBCProdutoDAO(conexao);
-			listaProdutos = jdbcProduto.buscarPorNome(nome);
-			conec.fecharConexao();
-			
-			String json = new Gson().toJson(listaProdutos);
-			return this.buildResponse(json);
-		} catch(Exception e) {
-			e.printStackTrace();
-			return this.buildErrorResponse(e.getMessage());
-		}
-	}
-	
-	@DELETE
-	@Path("/excluir/{id}")
-	@Consumes("application/*")
-	public Response excluir(@PathParam("id") int id) {
-		try {
-			Conexao conec = new Conexao();
-			Connection conexao = conec.abrirConexao();
-			JDBCProdutoDAO jdbcProduto = new JDBCProdutoDAO(conexao);
-			
-			boolean retorno = jdbcProduto.deletar(id);
-			
-			String msg = "";
+
 			if (retorno) {
-				msg = "Produto excluído com sucesso";
+				msg = "Produto cadastrado com sucesso!";
 			} else {
-				msg = "Erro ao excluir produto";
-			}
+				msg = "Erro ao cadastrar produto";
+			}	
+				
 			conec.fecharConexao();
+			
 			return this.buildResponse(msg);
-		}catch(Exception e){
-			e.printStackTrace();
-			return this.buildErrorResponse(e.getMessage());
-		}
-	}
-	
-	@GET
-	@Path("/buscarPorId")
-	@Consumes("application/*")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response buscarPorId(@QueryParam("id") int id) {
-		try {
-			Produto produto = new Produto();
-			Conexao conec = new Conexao();
-			Connection conexao = conec.abrirConexao();
-			JDBCProdutoDAO jdbcProduto = new JDBCProdutoDAO(conexao);
 			
-			produto = jdbcProduto.buscarPorId(id);
-			
-			conec.fecharConexao();
-			return this.buildResponse(produto);			
 		} catch (Exception e) {
 			e.printStackTrace();
 			return this.buildErrorResponse(e.getMessage());
 		}
 	}
 	
-	@PUT
-	@Path("/alterar")
-	@Consumes("application/*")
-	public Response alterar(String produtoParam) {
-		try {
-			Produto produto = new Gson().fromJson(produtoParam, Produto.class);
-			Conexao conec = new Conexao();
-			Connection conexao = conec.abrirConexao();
-			JDBCProdutoDAO jdbcProduto = new JDBCProdutoDAO(conexao);
-			
-			boolean retorno = jdbcProduto.alterar(produto);
-			String msg = "";
-			if (retorno) {
-				msg = "Produto alterado com sucesso";
-			} else {
-				msg = "Erro ao alterar o produto";
-			}
-			conec.fecharConexao();
-			return this.buildResponse(msg);			
-		} catch (Exception e) {
-			e.printStackTrace();
-			return this.buildErrorResponse(e.getMessage());
-		}
-	}
+	
 }
