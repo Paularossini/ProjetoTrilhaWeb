@@ -101,18 +101,24 @@ section h2, section h3{
 }
 
 /******formulário********/
-.frmInserir{
+.frmInserir, .frmFiltrar{
 	margin:0px auto;
 	margin-bottom:10px;
+}
+
+.frmInserir{
 	width:500px;
+}
+
+.frmFiltrar{
+	width:350px;
+	margin: 0% 30% 0% 30%;
 }
 
 .frmInserir label{
 	width:200px;
 }
-.frmFiltrar{
-	width:350px;
-}
+
 .frmInserir input, .frmInserir textarea, .frmInserir select{
 	width:300px;
 	padding:2px 0;
@@ -127,6 +133,7 @@ section h2, section h3{
 	display: flex;
     flex-direction: row-reverse	
 }
+
 .frmInserir button, .frmFiltrar button{
 	width: 100px;
 	margin:0 1%;
@@ -135,6 +142,7 @@ section h2, section h3{
 	font-size: 16px;
 	float: right;
 }
+
 .frmInserir .aviso{
 	background-color: #ff0000;
 	color: #fff;

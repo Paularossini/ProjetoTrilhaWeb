@@ -32,7 +32,7 @@ public class ProdutoRest extends UtilRest{
 	@Consumes("application/*")//Algo deve ser recebido
 	public Response inserir(String produtoParam) {
 		try {
-			Produto produto = new Gson().fromJson(produtoParam, Produto.class);//ele procura um atributo na classe que tenha o mesmo nome e guarda
+			Produto produto = new Gson().fromJson(produtoParam, Produto.class);//ele procura um atributo na classe que tenha o mesmo nome = e guarda
 			Conexao conec = new Conexao();
 			Connection conexao = conec.abrirConexao();
 			

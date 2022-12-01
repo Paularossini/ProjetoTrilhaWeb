@@ -26,6 +26,7 @@ public class JDBCProdutoDAO implements ProdutoDAO{
 				+ "VALUES (?,?,?,?,?,?)";
 		
 		try {
+			//prepara os parametros para serem inseridos no banco de foma mais segura
 			PreparedStatement p = this.conexao.prepareStatement(comando);
 			//substitui as ???
 			p.setInt(1, produto.getId());
@@ -44,6 +45,11 @@ public class JDBCProdutoDAO implements ProdutoDAO{
 		
 		return true;
 	}
+	
+	
+	
+	
+	
 	
 	
 	
