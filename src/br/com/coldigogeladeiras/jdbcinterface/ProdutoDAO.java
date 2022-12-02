@@ -7,5 +7,6 @@ import com.google.gson.JsonObject;
 public interface ProdutoDAO {
 	
 	public boolean inserir(Produto produto);
-
+	public List<JsonObject> buscarPorNome(String nome);
+	
 }

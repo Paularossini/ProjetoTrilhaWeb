@@ -46,36 +46,28 @@ public class JDBCProdutoDAO implements ProdutoDAO{
 		return true;
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	// Aqui Acaba
-	
-	
-	
-	
-	
-	
 	public List<JsonObject> buscarPorNome(String nome){
+		
 		String comando = "SELECT produtos.*, marcas.nome as marca FROM produtos"
 				+ " INNER JOIN marcas ON produtos.marca_id = marcas.id";
 		
 		if (!nome.equals("")) {
+			//concatena no comando, buscanfo o nome do produto
 			comando += " WHERE modelo LIKE '%" + nome+"%' ";
 		}
+		//finaliza o comando por ordem alfabetica
 		comando += " ORDER BY categoria ASC, marcas.nome ASC, modelo ASC";
 		
+		//O JsonObject cria codigos no fomato JSON, mas como um objeto Java
 		List<JsonObject> listaProdutos = new ArrayList<JsonObject>();
 		JsonObject produto = null;
+		
 		try {
 			Statement stmt = conexao.createStatement();
 			ResultSet rs = stmt.executeQuery(comando);
 			
 			while(rs.next()) {
+				
 				int id = rs.getInt("id");
 				String categoria = rs.getString("categoria");
 				String modelo = rs.getString("modelo");
@@ -106,6 +98,25 @@ public class JDBCProdutoDAO implements ProdutoDAO{
 		
 		return listaProdutos;
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	public boolean deletar(int id) {
 		String comando = "DELETE FROM produtos WHERE id = ?";

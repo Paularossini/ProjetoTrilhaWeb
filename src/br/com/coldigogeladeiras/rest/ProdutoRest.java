@@ -4,25 +4,21 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
-import com.google.gson.Gson;
 import javax.ws.rs.GET;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
+
 import br.com.coldigogeladeiras.bd.Conexao;
 import br.com.coldigogeladeiras.jdbc.JDBCProdutoDAO;
-import br.com.coldigogeladeiras.modelo.Marca;
 import br.com.coldigogeladeiras.modelo.Produto;
+
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.PUT;
-import br.com.coldigogeladeiras.jdbc.JDBCMarcaDAO;
 
 @Path("produto")
 public class ProdutoRest extends UtilRest{
@@ -51,6 +47,31 @@ public class ProdutoRest extends UtilRest{
 			return this.buildResponse(msg);
 			
 		} catch (Exception e) {
+			e.printStackTrace();
+			return this.buildErrorResponse(e.getMessage());
+		}
+	}
+	
+	@GET
+	@Path("/buscar")
+	@Consumes("application/*")//Algo deve ser recebido
+	@Produces(MediaType.APPLICATION_JSON)//Produz algo em JSON
+	public Response buscarProNome(@QueryParam("valorBusca") String nome) {//query passa valorBusca para nome
+	
+		try {
+			
+			List<JsonObject> listaProdutos = new ArrayList<JsonObject>();
+			
+			Conexao conec = new Conexao();
+			Connection conexao = conec.abrirConexao();
+			JDBCProdutoDAO jdbcProduto = new JDBCProdutoDAO(conexao);
+			listaProdutos = jdbcProduto.buscarPorNome(nome);
+			conec.fecharConexao();
+			
+			String json = new Gson().toJson(listaProdutos);
+			return this.buildResponse(json);
+			
+		}catch(Exception e) {
 			e.printStackTrace();
 			return this.buildErrorResponse(e.getMessage());
 		}
