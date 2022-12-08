@@ -54,7 +54,7 @@ $(document).ready(function(){
 	//Cadastra no bd o produto informado
 	COLDIGO.produto.cadastrar = function(){
 		
-		var produto = new Objetct();
+		var produto = new Object();
 		produto.categoria = document.frmAddProduto.categoria.value;
 		produto.marcaId = document.frmAddProduto.marcaId.value;
 		produto.modelo = document.frmAddProduto.modelo.value;
@@ -66,7 +66,7 @@ $(document).ready(function(){
 			COLDIGO.exibirAviso("Preencha todos os campos!");
 		
 		}else{
-			$ajax({
+			$.ajax({
 				type:"POST",
 				url: COLDIGO.PATH+"produto/inserir",
 				data:JSON.stringify(produto), //Transforma o objeto e string em formato json
