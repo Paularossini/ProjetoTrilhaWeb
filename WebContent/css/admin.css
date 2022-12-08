@@ -102,20 +102,19 @@ section h2, section h3{
 
 /******formulário********/
 .frmInserir, .frmFiltrar{
-	margin:0px auto;
-	margin-bottom:10px;
-}
-
-.frmInserir{
-	width:500px;
-}
-
-.frmFiltrar{
-	width:350px;
+margin: 0px auto;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    align-items: center;
 }
 
 .frmInserir label{
 	width:200px;
+}
+.frmFiltrar{
+	width:350px;
 }
 
 .frmInserir input, .frmInserir textarea, .frmInserir select{
@@ -135,7 +134,6 @@ section h2, section h3{
 
 .frmInserir button, .frmFiltrar button{
 	width: 100px;
-	margin:0 1%;
 	background-color: #b1ccf5;
 	font-weight: bold;
 	font-size: 16px;
