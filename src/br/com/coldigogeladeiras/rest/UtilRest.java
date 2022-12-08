@@ -23,7 +23,9 @@ public class UtilRest {
 		
 		ResponseBuilder rb = Response.status(Response.Status.INTERNAL_SERVER_ERROR);
 
+		//define uma entidade (objeto) que retornara ao cliente
 		rb = rb.entity(str);
+		//define o tipo de retorno da entidade, no caso texto simples
 		rb = rb.type("text/plain");
 		
 		return rb.build();

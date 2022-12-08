@@ -85,15 +85,15 @@ $(document).ready(function(){
 	//Busca no BD e exibe na pagina os produtos que atendem a solicitaçao do usuario
 	COLDIGO.produto.buscar = function(){
 		
-		var valorBusca = $("#campoBuscaProduto").val();
+		var valorBusca = $("#campoBuscaProduto").val(); //Set o valor de um campo <input>
 		
 		$.ajax({
 			type:"GET",
 			url: COLDIGO.PATH+"produto/buscar", 
-			data:"vaorBusca="+valorBusca,
+			data:"valorBusca="+valorBusca,
 			success: function(dados){
 				
-				dados = JSON.parse(dados);
+				dados = JSON.parse(dados);//transformar um Json em objeto
 				$("#listaProdutos").html(COLDIGO.produto.exibir(dados));	
 			},
 			error:function(info){
