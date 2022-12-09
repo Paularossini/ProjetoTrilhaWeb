@@ -34,8 +34,9 @@ public class JDBCProdutoDAO implements ProdutoDAO{
 			p.setInt(4, produto.getCapacidade());
 			p.setFloat(5, produto.getValor());
 			p.setInt(6, produto.getMarcaId());
-			
+
 			p.execute();
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.print(e.getMessage());

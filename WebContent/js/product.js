@@ -101,6 +101,7 @@ $(document).ready(function(){
 			}
 		});
 	};
+	
 	//Transform os dados dos produtos recebidos do servidor em uma tabela HTML
 	COLDIGO.produto.exibir = function(listaDeProdutos){
 			

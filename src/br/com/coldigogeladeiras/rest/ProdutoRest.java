@@ -31,6 +31,7 @@ public class ProdutoRest extends UtilRest{
 	@Path("/inserir")
 	@Consumes("application/*")
 	public Response inserir(String produtoParam) {
+		//System.out.println(produtoParam);
 		try {
 			Produto produto = new Gson().fromJson(produtoParam, Produto.class);
 			Conexao conec = new Conexao();
@@ -46,10 +47,6 @@ public class ProdutoRest extends UtilRest{
 					msg = "Erro ao cadastrar produto";
 				}
 			
-
-			JDBCMarcaDAO jdbcMarca = new JDBCMarcaDAO(conexao);
-		
-	
 			conec.fecharConexao();
 			return this.buildResponse(msg);
 		} catch (Exception e) {
