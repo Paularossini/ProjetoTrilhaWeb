@@ -15,12 +15,10 @@ $(document).ready(function(){
 		});
 	}
 	
-	//Exibe os valores financeiros o formato da morda
 	COLDIGO.formatarDinheiro = function(valor){
-		return valor.toFixed(2).replace('.',',').replace(/(\d)(?=(\d{3})+\,)/g, "$1.");
+		return valor.toFixed(2).replace('.',',').replace(/(\d)(?=(\d{3})+\,)/g,"$1.");
 	}
 	
-	//MODAL
 	COLDIGO.exibirAviso = function(aviso){
 		var modal = {
 			title:"Mensagem",
@@ -32,8 +30,8 @@ $(document).ready(function(){
 					$(this).dialog("close");
 				}
 			}
-		};
+		}
 		$("#modalAviso").html(aviso);
-		$("#modalAviso").dialog(modal);//cria a modal
-	};
+		$("#modalAviso").dialog(modal);
+	}
 });
